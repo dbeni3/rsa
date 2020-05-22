@@ -1,41 +1,40 @@
 package com.company;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class Keygenerator {
 
-    public static BigInteger keyGen(int p,int q){
-        int n=p*q;
-        int en1=(p-1)*(q-1);
-        int e1=3;
+    public static ArrayList<BigInteger> keyGen(BigInteger p, BigInteger q){
+        BigInteger n=p.multiply(q);
+        BigInteger one=new BigInteger("1");
+        BigInteger t=new BigInteger("2");
+        BigInteger nul=new BigInteger("0");
+
+        BigInteger en=(p.subtract(one)).multiply(q.subtract(one));
+        BigInteger e=new BigInteger("3");
         while (true){
-            if(lnko(e1,en1)==1){
+            if((e.gcd(en)).equals(one)){
                 break;
             }
-            e1++;
-            if (e1<en1){
+            e=e.add(t);
+        }
+
+        ExtendedEuclidAlgorithm ea=new ExtendedEuclidAlgorithm();
+        BigInteger d=ea.EEA(e,en);
+        while (true) {
+            if (d.compareTo(nul) == -1) {
+                d = d.add(en);
+            } else {
                 break;
             }
         }
-        e1=73;
-        BigInteger e=new BigInteger(String.valueOf(e1));
-        BigInteger en=new BigInteger(String.valueOf(en1));
-        Triple t =ExtendedEuclidAlgorithm.apply(e,en);
-        BigInteger d=t.gets();
-        while (true){
-            if (d.intValue()<0){
-                d=d.add(en);
-            }else {
-                break;}
-        }
-        return d;
-    }
-    public static int lnko(int x, int y){
-        while(x != y){
-            if(x > y) x -= y;
-            else y -= x;
-        }
-        return x;
+        ArrayList<BigInteger> keys=new ArrayList<>();
+        keys.add(n);
+        keys.add(e);
+        keys.add(d);
+        return keys;
+
     }
 
 }

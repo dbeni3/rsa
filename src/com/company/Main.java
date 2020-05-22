@@ -1,55 +1,54 @@
 package com.company;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
 
-        //BigInteger n1 = new BigInteger(String.valueOf(209));
-       // BigInteger a = new BigInteger(String.valueOf(2));
-       // System.out.println(MillerRabin.millerRabin(n1, a));
-        //System.out.println(GenerateRandomPrime.generateRandomPrime());
-        //BigInteger p=GenerateRandomPrime.generateRandomPrime();
-        // BigInteger q=GenerateRandomPrime.generateRandomPrime();
-        //System.out.println(""+ p + " " +q);
 
-        //System.out.println(Encryption.encryption(3,253,117));
-        System.out.println(Decryption.decryption(19,65,161));
-        //System.out.println(Keygenerator.keyGen(GenerateRandomPrime.generateRandomPrime().intValue(),GenerateRandomPrime.generateRandomPrime().intValue()));
-
-        //Moduláris hatványozásra
-        //BigInteger n1=new BigInteger(String.valueOf(47));
-        //BigInteger m1=new BigInteger(String.valueOf(352));
-
-
-        //BigInteger c=m1.pow(51);
-       // BigInteger a=c.mod(n1);
-        //System.out.println(a);
-      /*  int a=2;
-        int n = 11;
-        int d = 0;
-        int s = 5;
-        while (true) {
-            d = (int) ((n - 1) / (Math.pow(2, s)));
-            if (d % 2 == 1) {
-                break;
-            }
-            s++;
+        BigInteger p=GenerateRandomPrime.gRP();
+        BigInteger q=GenerateRandomPrime.gRP();
+        while (p.equals(q)){
+            q=GenerateRandomPrime.gRP();
         }
-         Triple a=ExtendedEuclidAlgorithm.apply(n1,m1);
-        System.out.println(a.gets());
-        Math.floorMod((long) Math.pow(a,d),n);
-        System.out.println(Math.floorMod((long) Math.pow(a,d),n));
-        System.out.println(" n=" + n + "   d=" + d + "  S= " + s);*/
-        /*BigInteger n1=new BigInteger(String.valueOf(124));
-        BigInteger m1=new BigInteger(String.valueOf(84));
-        System.out.println(ExtendedEuclidAlgorithm.apply(n1,m1).getd());
-        System.out.println(Keygenerator.lnko(124,84));*/
-        //System.out.println(Keygenerator.keyGen(23,29));
+        System.out.println(" p = " + p +"     q =" + q);
+        ArrayList<BigInteger> keys=Keygenerator.keyGen(p,q);
+        BigInteger n =keys.get(0);
+        BigInteger e =keys.get(1);
+        BigInteger d =keys.get(2);
+        System.out.println( "n= " + n + "   e= " + e + "    d= "+ d);
+        System.out.println("Irja be az üzenetet");
+        Scanner scanner = new Scanner(System.in);
+        int number = scanner.nextInt();
+        BigInteger m=new BigInteger(String.valueOf(number));
+        System.out.println("Irjon 1 est titkosításhoz,0-át visszafejtéshez");
+        int number1 = scanner.nextInt();
+        if(number1==1){
+            System.out.println("titkosított üzenet " + Encryption.encryption(e,n,m));
+        }else if (number1==0){
+            System.out.println("visszafejtett üzenet " + Decryption.decryption(m,d,n));
+        }else System.out.println("Vagy 1 est írjon vagy 0 át");
 
 
+/*
+        BigInteger n1 =new BigInteger("25345141");
+        BigInteger e1 =new BigInteger("3");
+        BigInteger d1 =new BigInteger("1");
+        BigInteger m1 =new BigInteger("562");
+        System.out.println("visszafejtett üzenet " + Decryption.decryption(m1,d1,n1));
+        System.out.println("titkosított üzenet " + Encryption.encryption(e1,n1,m1));*/
+
+     /*  BigInteger a = new BigInteger("2");
+       BigInteger g = new BigInteger("78915497");
+       System.out.println(MillerRabin.millerRabin(g, a));*/
+
+        //System.out.println(ExtendedEuclidAlgorithm.EEA(new BigInteger("120"),new BigInteger("23")));
+       // System.out.println(Keygenerator.keyGen(new BigInteger("17"),new BigInteger("23")));
 
     }
 }
